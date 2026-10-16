@@ -1,7 +1,21 @@
-from fastapi import FastAPI
-from app.db.session import engine
+from contextlib import asynccontextmanager
+from collections.abc import AsyncGenerator
 
-app = FastAPI(title="User Management API")
+from fastapi import FastAPI
+
+from app.api.routes.users import router as user_routers
+from app.db.init_db import create_tables
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    create_tables()
+    yield
+
+
+app = FastAPI(title="User Management API", lifespan=lifespan)
+
+app.include_router(user_routers)
 
 @app.get("/health")
 def health_check():
