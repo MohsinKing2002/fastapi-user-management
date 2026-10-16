@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from app.models.user import UserDB
 from app.schemas.user import UserCreate
 
+
+# create user service
 def create_user(db: Session, user_data: UserCreate) -> UserDB:
     user = UserDB(
         name=user_data.name,
@@ -16,5 +18,6 @@ def create_user(db: Session, user_data: UserCreate) -> UserDB:
     return user
 
 
+# get all user service
 def get_all_users(db: Session) -> list[UserDB]:
     return db.query(UserDB).order_by(UserDB.id).all()

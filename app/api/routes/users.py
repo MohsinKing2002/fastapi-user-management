@@ -6,12 +6,18 @@ from app.db.dependencies import get_db
 from app.schemas.user import UserCreate, UserResponse
 from app.services.users import create_user, get_all_users
 
+
+# api router
 router = APIRouter(prefix="/users", tags=["Users"])
 
+
+# all users endpoint
 @router.get("/all", response_model=list[UserResponse])
 def get_all_users_endpoint(db: Session = Depends(get_db)) -> list[UserResponse]:
     return get_all_users(db)
 
+
+# new user creation endpoint
 @router.post("/new", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user_endpoint(user_data: UserCreate, db: Session = Depends(get_db)) -> UserResponse:
     try:
