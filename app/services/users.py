@@ -14,3 +14,7 @@ def create_user(db: Session, user_data: UserCreate) -> UserDB:
     db.refresh(user)
 
     return user
+
+
+def get_all_users(db: Session) -> list[UserDB]:
+    return db.query(UserDB).order_by(UserDB.id).all()
