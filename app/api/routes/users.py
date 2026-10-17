@@ -16,6 +16,12 @@ from app.services.users import (
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
+# all users endpoint
+@router.get("/all", response_model=list[UserResponse], status_code=status.HTTP_200_OK)
+def get_all_users_endpoint(db: Session = Depends(get_db)) -> list[UserResponse]:
+    return get_all_users(db)
+
+
 # get user by id endpoint
 @router.get("/{user_id}", response_model=UserResponse)
 def get_user_by_id_endpoint(
@@ -29,12 +35,6 @@ def get_user_by_id_endpoint(
         )
 
     return user
-
-
-# all users endpoint
-@router.get("/all", response_model=list[UserResponse])
-def get_all_users_endpoint(db: Session = Depends(get_db)) -> list[UserResponse]:
-    return get_all_users(db)
 
 
 # new user creation endpoint
