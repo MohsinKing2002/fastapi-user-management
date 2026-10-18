@@ -7,8 +7,7 @@ from app.schemas.user import UserCreate
 # create user service
 def create_user(db: Session, user_data: UserCreate) -> UserDB:
     user = UserDB(
-        name=user_data.name,
-        email=user_data.email
+        name=user_data.name, email=user_data.email, phone_number=user_data.phone_number
     )
 
     db.add(user)
@@ -32,6 +31,7 @@ def get_user_by_id(db: Session, user_id: int) -> UserDB | None:
 def update_user(db: Session, user: UserDB, user_data: UserCreate) -> UserDB:
     user.name = user_data.name.strip()
     user.email = user_data.email.strip()
+    user.phone_number = user_data.phone_number.strip()
 
     db.commit()
     db.refresh(user)
