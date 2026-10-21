@@ -18,4 +18,4 @@ app.include_router(user_routers)
 def health_check() -> dict[str, str]:
     """Health check endpoint"""
 
-    return {"status": "ok", "statusCode": 200, "message": "Server is Healthy"}
+    return {"status": "ok", "statusCode": "200", "message": "Server is Healthy"}
